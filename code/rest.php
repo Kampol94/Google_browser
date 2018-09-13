@@ -6,7 +6,7 @@
 // $username = "root";
 // $password = "mysql";
 // $dbname = "crawler";
-$servername = "mysql";
+$servername = "localhost";
 $username = "root";
 $password = "mysql";
 $dbname = "Crawler";
@@ -14,6 +14,8 @@ $dbname = "Crawler";
 if(!empty($_GET['search'])){
     $searchTerm = $_GET['search'];
 }
+
+$searchTerm ='Python';
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -25,8 +27,9 @@ if ($conn->connect_error) {
 
 // ---------------------------------------------- FUNCTIONS ----------------------------------------------
 function getResults($conn, $searchTerm) {
-    $sql = "SELECT `id`, `site`, `content`, `date` FROM `SitesViewed` WHERE 1";
-
+        $sql = "SELECT `id`, `site`, `content`, `date` FROM `SitesViewed` WHERE `content` LIKE '%Python%'";
+	
+     echo $sql;
 	$result = $conn->query($sql);
 
 	if ($result->num_rows > 0) {
