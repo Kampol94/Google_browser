@@ -15,8 +15,6 @@ if(!empty($_GET['search'])){
     $searchTerm = $_GET['search'];
 }
 
-$searchTerm ='Python';
-
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
 
@@ -27,23 +25,23 @@ if ($conn->connect_error) {
 
 // ---------------------------------------------- FUNCTIONS ----------------------------------------------
 function getResults($conn, $searchTerm) {
-        $sql = "SELECT `id`, `site`, `content`, `date` FROM `SitesViewed` WHERE `content` LIKE '%Python%'";
-	
-     echo $sql;
-	$result = $conn->query($sql);
+    $sql = "SELECT * FROM sitesviewed WHERE content LIKE '%$searchTerm%'";
+    var_dump($sql);
 
-	if ($result->num_rows > 0) {
-		$myArray = [];
+	$result = $conn -> query($sql);
+	var_dump($result);
+		if ($result-> num_rows > 0) {
+			echo('NUMBER OF RECORDS: '.$result -> num_rows);
+			$myArray = [];
 
-	    // output data of each row
-	    while($row = $result->fetch_assoc()) {
-            $myArray[] = $row;
-	    }
-
-	    echo json_encode($myArray);
-	} else {
-	    echo "0 results";
-	}
+		    // output data of each row
+		    while($row = $result->fetch_assoc()) {
+	            $myArray[] = $row;
+		    }
+		    echo json_encode($myArray);
+		} else {
+		    echo "0 results";
+		}
 }
 
 if(isset($searchTerm)) {
